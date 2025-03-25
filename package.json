@@ -5,8 +5,6 @@
     "npm-run-all": "^4.1.5"
   },
   "scripts": {
-    "preview": "npm-run-all --parallel sync start",
-    "sync": "browser-sync start --proxy 'localhost/wp-admin' --files '**/*.php' 'build/*.js' 'build/*.css'",
     "build": "wp-scripts build",
     "start": "wp-scripts start"
   }

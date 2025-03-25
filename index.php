@@ -16,7 +16,6 @@ function unadorned_announcement_bar_settings_page()
         'unadorned_announcement_bar_settings_page_html'
     );
 }
-
 //Callback function for unadorned-announcement-bar options page
 add_action('admin_menu', 'unadorned_announcement_bar_settings_page');
 
@@ -53,9 +52,20 @@ function unadorned_announcement_bar_settings_page_enqueue_style_script($admin_pa
         )
     );
 
-    wp_enqueue_style('wp-components');
-}
+    wp_enqueue_style(
+        'unadorned-announcement-bar-style',
+        plugins_url('build/index.css', __FILE__),
+        array_filter(
+            $asset['dependencies'],
+            function ($style) {
+                return wp_style_is($style, 'registered');
+            }
+        ),
+        $asset['version'],
+    );
 
+    // wp_enqueue_style('wp-components');
+}
 add_action('admin_enqueue_scripts', 'unadorned_announcement_bar_settings_page_enqueue_style_script');
 
 
@@ -98,10 +108,26 @@ function unadorned_announcement_bar_settings()
     );
 
 }
-
 add_action('init', 'unadorned_announcement_bar_settings');
 
 
-//Loading the settings for the announcement bar settings
+//Displaying the announcement bar on the front end
+function unadorned_announcement_bar_display()
+{
+    $options = get_option('unadorned_announcement_bar');
+    if ($options['display']) {
+        // enqueue the CSS
+        wp_enqueue_style(
+            'una-bar-display-style',
+            plugins_url('style.css', __FILE__)
+        );
+        printf(
+            '<div class="una-bar una-bar-%s">%s</div>',
+            esc_attr($options['size']),
+            esc_html($options['message'])
+        );
+    }
+}
+add_action('wp_body_open', 'unadorned_announcement_bar_display');
 
 

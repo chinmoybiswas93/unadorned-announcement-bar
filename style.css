@@ -1,0 +1,25 @@
+.una-bar {
+  background-color: blue;
+  text-align: center;
+  color: #fff;
+}
+
+.una-bar.una-bar-small {
+  font-size: 14px;
+  padding: 10px;
+}
+
+.una-bar.una-bar-medium {
+  font-size: 18px;
+  padding: 15px;
+}
+
+.una-bar.una-bar-large {
+  font-size: 26px;
+  padding: 25px;
+}
+
+.una-bar.una-bar-xl {
+  font-size: 30px;
+  padding: 30px;
+}

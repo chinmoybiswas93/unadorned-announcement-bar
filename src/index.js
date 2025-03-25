@@ -1,7 +1,10 @@
+import "./index.scss";
 import domReady from "@wordpress/dom-ready";
 import { createRoot, useState, useEffect } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 import apiFetch from "@wordpress/api-fetch";
+import { useDispatch, useSelect } from "@wordpress/data";
+import { store as noticeStore } from "@wordpress/notices";
 import {
   Button,
   FontSizePicker,
@@ -10,6 +13,7 @@ import {
   PanelRow,
   TextareaControl,
   ToggleControl,
+  NoticeList,
 } from "@wordpress/components";
 
 import {
@@ -25,18 +29,21 @@ const useSettings = () => {
 
   //Loading the settings
   useEffect(() => {
-    console.log("Settings Loaded");
+    // console.log("Settings Loaded");
     apiFetch({ path: "/wp/v2/settings" }).then((settings) => {
-      console.log(settings);
+      // console.log(settings);
       setMessage(settings.unadorned_announcement_bar.message);
       setDisplay(settings.unadorned_announcement_bar.display);
       setSize(settings.unadorned_announcement_bar.size);
     });
   }, []);
 
+  //Create notice for the user
+  const { createSuccessNotice, createErrorNotice } = useDispatch(noticeStore);
+
   //Saving the settings
   const saveSettings = () => {
-    console.log("Settings Updaing");
+    // console.log("Settings Updaing");
     apiFetch({
       path: "/wp/v2/settings",
       method: "POST",
@@ -47,9 +54,17 @@ const useSettings = () => {
           size,
         },
       },
-    }).then(() => {
-      console.log("Settings Updated");
-    });
+    })
+      .then(() => {
+        createSuccessNotice(
+          __("Settings updated successfully", "unadorned-announcement-bar")
+        );
+      })
+      .catch((error) => {
+        createErrorNotice(
+          __("Error: Settings Not Updated", "unadorned-announcement-bar")
+        );
+      });
   };
 
   return {
@@ -119,9 +134,20 @@ const SaveButton = ({ onClick }) => {
 const SettingsTitle = () => {
   return (
     <Heading level={1}>
-      {__("Announcement Bar Settings", "unadorned-announcement-bar")}
+      {__("Announcement Bar Settings Page", "unadorned-announcement-bar")}
     </Heading>
   );
+};
+
+//Notice component
+const Notices = () => {
+  const { removeNotice } = useDispatch(noticeStore);
+  const notices = useSelect((select) => select(noticeStore).getNotices());
+  if (notices.length === 0) {
+    return null;
+  }
+
+  return <NoticeList notices={notices} onRemove={removeNotice} />;
 };
 
 //Building the UI of the settings page
@@ -142,6 +168,7 @@ const SettingsPage = () => {
   return (
     <>
       <SettingsTitle />
+      <Notices />
       <Panel>
         <PanelBody
           title={__("Settingss", "unadorned-announcement-bar")}
@@ -169,9 +196,7 @@ const SettingsPage = () => {
           </PanelRow>
         </PanelBody>
       </Panel>
-      <div>
-        <SaveButton onClick={saveSettings} />
-      </div>
+      <SaveButton onClick={saveSettings} />
     </>
   );
 };
