@@ -17,7 +17,7 @@ The settings page for the plugin is inspired by the [WordPress Developer Blog](h
 
 ## Installation
 
-1. Download the plugin from the [plugin overview link](https://jam.dev/c/1b9f056f-6b25-4126-994f-f185e87b8a18).
+1. Download the plugin from the this repository.
 2. Upload the plugin to the `/wp-content/plugins/` directory.
 3. Activate the plugin through the 'Plugins' menu in WordPress.
 4. Navigate to the **Announcement Bar Settings** page to configure your announcement bar.
