@@ -20,21 +20,17 @@ The settings page for the plugin is inspired by the [WordPress Developer Blog](h
 1. Download the plugin from the this repository.
 2. Upload the plugin to the `/wp-content/plugins/` directory.
 3. Activate the plugin through the 'Plugins' menu in WordPress.
-4. Navigate to the **Announcement Bar Settings** page to configure your announcement bar.
+4. Navigate to the **Settings -> Unadorned Announcement Bar** page to configure your announcement bar.
 
 ## Usage
 
-1. Go to the **Announcement Bar Settings** page in your WordPress admin dashboard.
-2. Customize the announcement bar text, colors, and display options.
+1. Go to the **Settings -> Unadorned Announcement Bar** page in your WordPress admin dashboard.
+2. Customize the announcement bar text, size, and display options.
 3. Save your settings and view the announcement bar on your website.
 
 ## Contributing
 
 Contributions are welcome! If you have suggestions or encounter issues, please open an issue or submit a pull request.
-
-## License
-
-This plugin is licensed under the [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html).
 
 ## Links
 
